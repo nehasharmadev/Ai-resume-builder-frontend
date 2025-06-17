@@ -1,0 +1,74 @@
+
+     <header class="navbar shadow-sm mb-2">
+      <div class="container-max d-flex align-items-center justify-content-between">
+        <div class="navbar-brand">AI Resume Builder</div>
+        <nav class="d-none d-md-flex gap-4 align-items-center">
+          <a class="nav-link" href="#features">Features</a>
+          <a class="nav-link" href="#how-it-works">How It Works</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container-max flex-grow-1">
+      <section class="hero text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3 gradient-text">Build Your Perfect Resume with AI</h1>
+        <p class="lead text-muted mb-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+          Describe yourself, and let our AI craft a professional resume tailored to your strengths and career goals.
+        </p>
+        <form [formGroup]="myForm" (ngSubmit)="generateResume()" class="mx-auto" style="max-width: 600px;">
+          <label for="description" class="form-label fw-semibold text-secondary mb-2">Describe yourself</label>
+          <textarea
+            id="description"
+            class="form-control mb-3 description-input"
+            formControlName="description"
+            placeholder="Enter your professional summary, skills, and achievements..."
+            required
+            rows="5"
+          ></textarea>
+          <button type="submit" class="btn btn-primary w-100" [disabled]="myForm.invalid">Generate Resume</button>
+        </form>
+      </section>
+
+      <section id="features" class="pt-5 pb-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4 text-center">
+          <div class="col">
+            <div class="card border-0 shadow-sm rounded-3 p-4 h-100 feature-card">
+              <svg class="mb-3 mx-auto icon-accent" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 1v22M20 12H4"/></svg>
+              <h5 class="fw-semibold mb-2 accent-text">AI-Powered</h5>
+              <p class="text-muted mb-0">Leverages powerful AI to craft tailored, professional resumes in minutes.</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card border-0 shadow-sm rounded-3 p-4 h-100 feature-card">
+              <svg class="mb-3 mx-auto icon-accent" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <h5 class="fw-semibold mb-2 accent-text">Fast &amp; Easy</h5>
+              <p class="text-muted mb-0">Create polished resumes quickly with easy-to-use input forms and smart suggestions.</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card border-0 shadow-sm rounded-3 p-4 h-100 feature-card">
+              <svg class="mb-3 mx-auto icon-accent" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M16 12a4 4 0 11-8 0 4 4 0 018 0z"/><path d="M12 14a8 8 0 100-8"/></svg>
+              <h5 class="fw-semibold mb-2 accent-text">Customizable</h5>
+              <p class="text-muted mb-0">Fully customize your resume content and layout to impress potential employers.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+       <section id="how-it-works" class="pt-5 pb-5 text-center">
+        <h2 class="mb-4 fw-semibold accent-text">How It Works</h2>
+        <p class="mb-4 text-muted mx-auto" style="max-width:600px;">
+          Simply provide a description about yourself and your professional achievements. Our AI analyzes the information to create a polished, ATS-friendly resume ready to download or share.
+        </p>
+      </section>
+      <section id="contact" class="pt-5 pb-5 text-center">
+        <h2 class="mb-4 fw-semibold accent-text">Get Started Today</h2>
+        <p class="mb-4 text-muted mx-auto" style="max-width:600px;">
+          Join thousands of professionals who have improved their job search with our AI resume builder.
+        </p>
+        <button class="btn btn-gradient btn-lg" (click)="scrollToForm()">Start Building Your Resume</button>
+      </section>
+    </main>
+    <footer class="text-center text-muted py-3 mt-auto" style="background: #f0f4f8; user-select: none;">
+      &copy; 2024 AI Resume Builder. All rights reserved.
+    </footer>

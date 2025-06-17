@@ -1,0 +1,47 @@
+p {
+      font-size: 1.125rem;
+      max-width: 100%;
+      color: #6b7280;
+    }
+    button.btn-secondary {
+      background-color: #374151; 
+      border: none;
+      padding: 0.75rem 2rem;
+      font-weight: 700;
+      font-size: 1.25rem;
+      border-radius: 1rem;
+      color: white;
+      cursor: pointer;
+      box-shadow: none;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      user-select: none;
+    }
+    button.btn-secondary:hover {
+      background-color: #1f2937; 
+      transform: translateY(-2px);
+    }
+
+      .pagenotfound-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .muted-text {
+      color: #6b7280; 
+      font-weight: 900;
+      font-size: 6rem;
+    }
+    h2 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #111827;
+    }
+
+    :host {
+      display: flex;
+      height: 100vh;
+      background: #f8fafc; 
+      color: #374151; 
+      font-family: 'Inter', sans-serif;
+    }

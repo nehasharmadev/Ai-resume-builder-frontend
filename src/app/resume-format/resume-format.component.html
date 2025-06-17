@@ -1,0 +1,494 @@
+<form [formGroup]="resumeForm" (ngSubmit)="onSubmit()" class="resume-form p-4 rounded shadow-sm bg-white">
+  <h2 class="section-title text-accent">Personal Information</h2>
+  <div formGroupName="personalInformation" class="row g-3">
+
+    <div class="col-md-6">
+      <label class="form-label" for="fullName">Full Name <small class="red">*</small></label>
+      <input id="fullName" formControlName="fullName" class="form-control input-accent" required />
+      <div *ngIf="resumeForm.get('personalInformation.fullName')?.invalid && resumeForm.get('personalInformation.fullName')?.touched" class="text-danger">
+        <small>Full Name is required.</small>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label" for="email">Email <small class="red">*</small></label>
+      <input id="email" type="email" formControlName="email" class="form-control input-accent" required />
+      <div *ngIf="resumeForm.get('personalInformation.email')?.invalid && resumeForm.get('personalInformation.email')?.touched" class="text-danger">
+        <span *ngIf="resumeForm.get('personalInformation.email')?.errors?.['required']"> <small>Email is required.</small></span>
+        <span *ngIf="resumeForm.get('personalInformation.email')?.errors?.['email']"> <small>Invalid email format.</small> </span>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label" for="phoneNumber">Phone Number <small class="red">*</small></label>
+      <input id="phoneNumber" formControlName="phoneNumber" class="form-control input-accent" required />
+      <div *ngIf="resumeForm.get('personalInformation.phoneNumber')?.invalid && resumeForm.get('personalInformation.phoneNumber')?.touched" class="text-danger">
+        <small>Phone Number is required. </small>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label" for="location">Location <small class="red">*</small></label>
+      <input id="location" formControlName="location" class="form-control input-accent" required />
+      <div *ngIf="resumeForm.get('personalInformation.location')?.invalid && resumeForm.get('personalInformation.location')?.touched" class="text-danger">
+        <small>Location is required.</small>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label" for="linkedIn">LinkedIn (optional)</label>
+      <input id="linkedIn" formControlName="linkedIn" class="form-control input-accent" />
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label" for="gitHub">GitHub (optional)</label>
+      <input id="gitHub" formControlName="gitHub" class="form-control input-accent" />
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label" for="portfolio">Portfolio (optional)</label>
+      <input id="portfolio" formControlName="portfolio" class="form-control input-accent" />
+    </div>
+
+  </div>
+
+  <div class="mb-4 mt-3">
+    <label class="form-label" for="summary">Summary <small class="red">*</small></label>
+    <textarea id="summary" formControlName="summary" class="form-control input-accent" rows="3" placeholder="Brief overview of your skills, experience, and goals" required></textarea>
+  </div>
+
+  <h2 class="section-title mt-4 text-accent">Skills</h2>
+  <div formArrayName="skills" class="mb-3">
+
+    <div *ngFor="let skill of skills.controls; let i = index"
+         [formGroupName]="i"
+         class="skill-item d-flex align-items-center gap-3 mb-2">
+
+      <input formControlName="title"
+             class="form-control form-control-sm input-accent"
+             placeholder="Skill title"
+             required />
+      <label class="form-label small mb-0 ms-1 red">*</label>
+      <div *ngIf="skill.get('title')?.invalid && skill.get('title')?.touched" class="text-danger">
+        <small>Title is required. </small>
+      </div>
+
+      <input formControlName="level"
+             class="form-control form-control-sm input-accent"
+             placeholder="Level (e.g. Beginner)"
+             required />
+      <label class="form-label small mb-0 ms-1 red">*</label>
+      <div *ngIf="skill.get('level')?.invalid && skill.get('level')?.touched" class="text-danger">
+        <small>Level is required.</small>
+      </div>
+
+      <button type="button"
+              class="btn btn-outline-accent btn-sm"
+              (click)="removeSkill(i)"
+              aria-label="Remove Skill">
+        &times;
+      </button>
+
+    </div>
+
+    <button type="button"
+            class="btn btn-sm btn-outline-accent mt-1"
+            (click)="addSkill()">
+      + Add Skill
+    </button>
+
+  </div>
+
+  <h2 class="section-title mt-4 text-accent">Experience</h2>
+
+  <div formArrayName="experience" class="mb-3">
+
+    <div *ngFor="let exp of experience.controls; let i = index"
+         [formGroupName]="i"
+         class="experience-item border rounded p-3 mb-3 shadow-sm">
+
+      <div class="row g-3">
+
+        <div class="col-md-6">
+          <label class="form-label">Job Title <small class="red">*</small></label>
+          <input formControlName="jobTitle"
+                 class="form-control form-control-sm input-accent"
+                 required>
+          <div *ngIf="exp.get('jobTitle')?.invalid && exp.get('jobTitle')?.touched" class="text-danger small mt-1">
+            Job title is required.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Company <small class="red">*</small></label>
+          <input formControlName="company"
+                 class="form-control form-control-sm input-accent"
+                 required>
+          <div *ngIf="exp.get('company')?.invalid && exp.get('company')?.touched" class="text-danger small mt-1">
+            Company is required.
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Location <small class="red">*</small></label>
+          <input formControlName="location"
+                 class="form-control form-control-sm input-accent"
+                 required>
+          <div *ngIf="exp.get('location')?.invalid && exp.get('location')?.touched" class="text-danger small mt-1">
+            Location is required.
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Duration <small class="red">*</small></label>
+          <input formControlName="duration"
+                 class="form-control form-control-sm input-accent"
+                 placeholder="e.g., Jan 2020 - Present"
+                 required>
+          <div *ngIf="exp.get('duration')?.invalid && exp.get('duration')?.touched" class="text-danger small mt-1">
+            Duration is required.
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Responsibility <small class="red">*</small></label>
+          <input formControlName="responsibility"
+                 class="form-control form-control-sm input-accent"
+                 required>
+          <div *ngIf="exp.get('responsibility')?.invalid && exp.get('responsibility')?.touched" class="text-danger small mt-1">
+            Responsibility is required.
+          </div>
+        </div>
+
+      </div>
+
+      <button type="button"
+              class="btn btn-outline-danger btn-sm mt-2"
+              (click)="removeExperience(i)">
+         ×
+      </button>
+
+    </div>
+
+    <button type="button"
+            class="btn btn-sm btn-outline-accent"
+            (click)="addExperience()">
+      + Add Experience
+    </button>
+
+  </div>
+
+  <h2 class="section-title mt-4 text-accent">Education</h2>
+
+  <div formArrayName="education" class="mb-3">
+
+    <div *ngFor="let ed of education.controls; let i = index"
+         [formGroupName]="i"
+         class="education-item border rounded p-3 mb-3 shadow-sm">
+
+      <div class="row g-3">
+
+        <div class="col-md-3">
+          <label class="form-label">Degree <small class="red">*</small></label>
+          <input formControlName="degree"
+                 class="form-control form-control-sm input-accent"
+                 required />
+          <div *ngIf="ed.get('degree')?.invalid && ed.get('degree')?.touched" class="text-danger small mt-1">
+            Degree is required.
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">University <small class="red">*</small></label>
+          <input formControlName="university"
+                 class="form-control form-control-sm input-accent"
+                 required />
+          <div *ngIf="ed.get('university')?.invalid && ed.get('university')?.touched" class="text-danger small mt-1">
+            University is required.
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Location <small class="red">*</small></label>
+          <input formControlName="location"
+                 class="form-control form-control-sm input-accent"
+                 required />
+          <div *ngIf="ed.get('location')?.invalid && ed.get('location')?.touched" class="text-danger small mt-1">
+            Location is required.
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Graduation Year <small class="red">*</small></label>
+          <input formControlName="graduationYear"
+                 class="form-control form-control-sm input-accent"
+                 required />
+          <div *ngIf="ed.get('graduationYear')?.invalid && ed.get('graduationYear')?.touched" class="text-danger small mt-1">
+            Graduation year is required.
+          </div>
+        </div>
+
+      </div>
+
+      <button type="button"
+              class="btn btn-outline-danger btn-sm mt-2"
+              (click)="removeEducation(i)">
+          ×
+      </button>
+
+    </div>
+
+    <button type="button"
+            class="btn btn-sm btn-outline-accent"
+            (click)="addEducation()">
+      + Add Education
+    </button>
+
+  </div>
+
+  <h2 class="section-title mt-4 text-accent">Certifications</h2>
+
+  <div formArrayName="certifications" class="mb-3">
+
+    <div *ngFor="let cert of certifications.controls; let i = index"
+         [formGroupName]="i"
+         class="cert-item border rounded p-3 mb-3 shadow-sm">
+
+      <div class="row g-3">
+
+        <div class="col-md-5">
+          <label class="form-label">Title <small class="red">*</small></label>
+          <input formControlName="title"
+                 class="form-control form-control-sm input-accent"
+                 required />
+          <div *ngIf="cert.get('title')?.invalid && cert.get('title')?.touched" class="text-danger small mt-1">
+            Title is required.
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <label class="form-label">Issuing Organization <small class="red">*</small></label>
+          <input formControlName="issuingOrganization"
+                 class="form-control form-control-sm input-accent"
+                 required />
+          <div *ngIf="cert.get('issuingOrganization')?.invalid && cert.get('issuingOrganization')?.touched" class="text-danger small mt-1">
+            Issuing organization is required.
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Year <small class="red">*</small></label>
+          <input formControlName="year"
+                 class="form-control form-control-sm input-accent"
+                 required />
+          <div *ngIf="cert.get('year')?.invalid && cert.get('year')?.touched" class="text-danger small mt-1">
+            Year is required.
+          </div>
+        </div>
+
+      </div>
+
+      <button type="button"
+              class="btn btn-outline-danger btn-sm mt-2"
+              (click)="removeCertification(i)">
+          ×
+      </button>
+
+    </div>
+
+    <button type="button"
+            class="btn btn-sm btn-outline-accent"
+            (click)="addCertification()">
+      + Add Certification
+    </button>
+
+  </div>
+
+  <h2 class="section-title mt-4 text-accent">Projects</h2>
+
+  <div formArrayName="projects" class="mb-3">
+
+    <div *ngFor="let proj of projects.controls; let i = index"
+         [formGroupName]="i"
+         class="project-item border rounded p-3 mb-3 shadow-sm">
+
+      <div class="mb-2">
+        <label class="form-label">Title <small class="red">*</small></label>
+        <input formControlName="title"
+               class="form-control form-control-sm input-accent"
+               required />
+        <div *ngIf="proj.get('title')?.invalid && proj.get('title')?.touched" class="text-danger small mt-1">
+          Title is required.
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Description <small class="red">*</small></label>
+        <textarea formControlName="description"
+                  class="form-control form-control-sm input-accent"
+                  rows="2"
+                  required></textarea>
+        <div *ngIf="proj.get('description')?.invalid && proj.get('description')?.touched" class="text-danger small mt-1">
+          Description is required.
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Technologies Used (comma separated) <small class="red">*</small></label>
+        <input formControlName="technologiesUsed"
+               class="form-control form-control-sm input-accent"
+               required />
+        <div *ngIf="proj.get('technologiesUsed')?.invalid && proj.get('technologiesUsed')?.touched" class="text-danger small mt-1">
+          Technologies used is required.
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">GitHub Link (optional)</label>
+        <input formControlName="githubLink"
+               class="form-control form-control-sm input-accent" />
+      </div>
+
+      <button type="button"
+              class="btn btn-outline-danger btn-sm mt-2"
+              (click)="removeProject(i)">
+          ×
+      </button>
+
+    </div>
+
+    <button type="button"
+            class="btn btn-sm btn-outline-accent"
+            (click)="addProject()">
+      + Add Project
+    </button>
+
+  </div>
+
+  <h2 class="section-title mt-4 text-accent">Achievements</h2>
+
+  <div formArrayName="achievements" class="mb-3">
+
+    <div *ngFor="let ach of achievements.controls; let i = index"
+         [formGroupName]="i"
+         class="achievement-item border rounded p-3 mb-3 shadow-sm">
+
+      <div class="mb-2">
+        <label class="form-label">Title <small class="red">*</small></label>
+        <input formControlName="title"
+               class="form-control form-control-sm input-accent"
+               required />
+        <div *ngIf="ach.get('title')?.invalid && ach.get('title')?.touched" class="text-danger small mt-1">
+          Title is required.
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Year <small class="red">*</small></label>
+        <input formControlName="year"
+               class="form-control form-control-sm input-accent"
+               required />
+        <div *ngIf="ach.get('year')?.invalid && ach.get('year')?.touched" class="text-danger small mt-1">
+          Year is required.
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Extra Information <small class="red">*</small></label>
+        <textarea formControlName="extraInformation"
+                  class="form-control form-control-sm input-accent"
+                  rows="2"
+                  required></textarea>
+        <div *ngIf="ach.get('extraInformation')?.invalid && ach.get('extraInformation')?.touched" class="text-danger small mt-1">
+          Extra information is required.
+        </div>
+      </div>
+
+      <button type="button"
+              class="btn btn-outline-danger btn-sm mt-2"
+              (click)="removeAchievement(i)">
+          ×
+      </button>
+
+    </div>
+
+    <button type="button"
+            class="btn btn-sm btn-outline-accent"
+            (click)="addAchievement()">
+      + Add Achievement
+    </button>
+
+  </div>
+
+  <h2 class="section-title mt-4 text-accent">Languages</h2>
+  <div formArrayName="languages" class="mb-3">
+
+    <div *ngFor="let lang of languages.controls; let i = index"
+         [formGroupName]="i"
+         class="language-item d-flex gap-3 align-items-center mb-2">
+
+      <div class="flex-grow-1">
+        <label class="form-label">Language Name <small class="red">*</small></label>
+        <input formControlName="name"
+               class="form-control form-control-sm input-accent"
+               placeholder="Language"
+               required />
+        <div *ngIf="lang.get('name')?.invalid && lang.get('name')?.touched" class="text-danger small mt-1">
+          Language name is required.
+        </div>
+      </div>
+
+      <button type="button"
+              class="btn btn-outline-danger btn-sm"
+              (click)="removeLanguage(i)">
+        ×
+      </button>
+
+    </div>
+
+    <button type="button"
+            class="btn btn-sm btn-outline-accent"
+            (click)="addLanguage()">
+      + Add Language
+    </button>
+
+  </div>
+
+  <h2 class="section-title mt-4 text-accent">Interests</h2>
+  <div formArrayName="interests" class="mb-3">
+
+    <div *ngFor="let interest of interests.controls; let i = index"
+         [formGroupName]="i"
+         class="interest-item d-flex gap-3 align-items-center mb-2">
+
+      <div class="flex-grow-1">
+        <label class="form-label">Interest Name <small class="red">*</small></label>
+        <input formControlName="name"
+               class="form-control form-control-sm input-accent"
+               placeholder="Interest"
+               required />
+        <div *ngIf="interest.get('name')?.invalid && interest.get('name')?.touched" class="text-danger small mt-1">
+          Interest name is required.
+        </div>
+      </div>
+
+      <button type="button"
+              class="btn btn-outline-danger btn-sm"
+              (click)="removeInterest(i)">
+        ×
+      </button>
+
+    </div>
+
+    <button type="button"
+            class="btn btn-sm btn-outline-accent"
+            (click)="addInterest()">
+      + Add Interest
+    </button>
+
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-4" [disabled]="resumeForm.invalid">Submit</button>
+  <button class="btn btn-primary mt-4 ms-4" (click)="generateAgain()">Generate Again</button>
+</form>
+

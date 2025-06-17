@@ -1,0 +1,111 @@
+<div class="resume-container container my-5 p-4 border rounded shadow-sm bg-light">
+
+  <!--HEADER -->
+  <h1 class="text-center name">{{ resumeData.personalInformation.fullName }}</h1>
+  <p class="text-center contact">
+    <strong>{{ resumeData.personalInformation.email }}</strong> | 
+    <strong>{{ resumeData.personalInformation.phoneNumber }}</strong> | 
+    <strong>{{ resumeData.personalInformation.location }}</strong>
+  </p>
+  <p class="text-center" *ngIf="resumeData.personalInformation.linkedIn">
+    <strong>LinkedIn:</strong>
+    <a [href]="resumeData.personalInformation.linkedIn" target="_blank">{{ resumeData.personalInformation.linkedIn }}</a>
+  </p>
+  <p class="text-center" *ngIf="resumeData.personalInformation.gitHub">
+    <strong>GitHub:</strong>
+    <a [href]="resumeData.personalInformation.gitHub" target="_blank">{{ resumeData.personalInformation.gitHub }}</a>
+  </p>
+  <p class="text-center" *ngIf="resumeData.personalInformation.portfolio">
+    <strong>Portfolio:</strong>
+    <a [href]="resumeData.personalInformation.portfolio" target="_blank">{{ resumeData.personalInformation.portfolio }}</a>
+  </p>
+
+  <hr>
+
+  <!-- SUMMARY -->
+  <h2 class="section-title">Summary</h2>
+  <p class="summary">{{ resumeData.summary }}</p>
+
+  <!-- SKILLS -->
+  <h2 class="section-title" *ngIf="resumeData.skills?.length">Skills</h2>
+  <p *ngIf="resumeData.skills?.length">
+    <span class="badge bg-light border skill" *ngFor="let skill of resumeData.skills">
+      {{ skill.title }} ({{ skill.level }})
+    </span>
+  </p>
+
+  <!-- EXPERIENCE -->
+  <h2 class="section-title" *ngIf="resumeData.experience?.length">Experience</h2>
+  <ng-container *ngFor="let exp of resumeData.experience">
+    <div class="mb-3" *ngIf="exp.jobTitle || exp.company">
+      <h3 class="job-title">{{ exp.jobTitle }} - <span class="company">{{ exp.company }}</span></h3>
+      <p class="text-muted"><em>{{ exp.location }} | {{ exp.duration }}</em></p>
+      <p>{{ exp.responsibility }}</p>
+    </div>
+  </ng-container>
+
+  <!-- EDUCATION -->
+  <h2 class="section-title" *ngIf="resumeData.education?.length">Education</h2>
+  <ng-container *ngFor="let edu of resumeData.education">
+    <div class="mb-3" *ngIf="edu.degree || edu.university">
+      <h3 class="degree-title">{{ edu.degree }} - <span class="university">{{ edu.university }}</span></h3>
+      <p class="text-muted"><em>{{ edu.location }} | {{ edu.graduationYear }}</em></p>
+    </div>
+  </ng-container>
+
+  <!-- CERTIFICATIONS -->
+  <h2 class="section-title" *ngIf="resumeData.certifications?.length">Certifications</h2>
+  <ul class="list-unstyled" *ngIf="resumeData.certifications?.length">
+    <ng-container *ngFor="let cert of resumeData.certifications">
+      <li *ngIf="cert.title || cert.issuingOrganization">
+        <strong>{{ cert.title }}</strong> - <span class="text-muted">{{ cert.issuingOrganization }} ({{ cert.year }})</span>
+      </li>
+    </ng-container>
+  </ul>
+
+  <!--  PROJECTS -->
+  <h2 class="section-title" *ngIf="resumeData.projects?.length">Projects</h2>
+  <ng-container *ngFor="let proj of resumeData.projects">
+    <div class="mb-3" *ngIf="proj.title">
+      <h3 class="project-title">{{ proj.title }}</h3>
+      <p>{{ proj.description }}</p>
+      <p><strong>Technologies:</strong> {{ proj.technologiesUsed }}</p>
+      <p *ngIf="proj.githubLink">
+        <a [href]="proj.githubLink" target="_blank">{{ proj.githubLink }}</a>
+      </p>
+    </div>
+  </ng-container>
+
+  <!--ACHIEVEMENTS -->
+  <h2 class="section-title" *ngIf="resumeData.achievements?.length">Achievements</h2>
+  <ul class="list-unstyled" *ngIf="resumeData.achievements?.length">
+    <ng-container *ngFor="let ach of resumeData.achievements">
+      <li *ngIf="ach.title">
+        <strong>{{ ach.title }}</strong> — {{ ach.year }}<br>
+        <span class="text-muted">{{ ach.extraInformation }}</span>
+      </li>
+    </ng-container>
+  </ul>
+
+  <!--  LANGUAGES -->
+  <h2 class="section-title" *ngIf="resumeData.languages?.length">Languages</h2>
+  <p *ngIf="resumeData.languages?.length">
+    <span *ngFor="let lang of resumeData.languages; let last = last">
+      {{ lang.name }}<span *ngIf="!last">, </span>
+    </span>
+  </p>
+
+  <!--  INTERESTS -->
+  <h2 class="section-title" *ngIf="resumeData.interests?.length">Interests</h2>
+  <p *ngIf="resumeData.interests?.length">
+    <span *ngFor="let interest of resumeData.interests; let last = last">
+      {{ interest.name }}<span *ngIf="!last">, </span>
+    </span>
+  </p>
+
+  <!--  DOWNLOAD BUTTON -->
+  <button class="btn btn-primary mt-4" (click)="downloadResume()">
+    Download Resume
+  </button>
+
+</div>
